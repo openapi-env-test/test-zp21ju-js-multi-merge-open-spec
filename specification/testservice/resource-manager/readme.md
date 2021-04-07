@@ -2,8 +2,7 @@
 
 ``` yaml
 openapi-type: arm
-tag: package-2020-01
-license-header: MICROSOFT_MIT_NO_VERSION
+tag: package-2020-02
 ```
 
 ``` yaml $(tag) == 'package-2020-01'
@@ -11,9 +10,15 @@ input-file:
 - Microsoft.TestService/stable/2020-01-01/TestService.json
 ```
 
+``` yaml $(tag) == 'package-2020-02'
+input-file:
+- Microsoft.TestService/stable/2020-02-01/TestService.json
+```
+
 ``` yaml $(multiapi) && !$(track2)
 batch:
   - tag: package-2020-01
+  - tag: package-2020-02
 ```
 
 ``` yaml $(swagger-to-sdk)
@@ -26,7 +31,6 @@ swagger-to-sdk:
   - repo: azure-sdk-for-trenton
   - repo: azure-cli-extensions
   - repo: azure-sdk-for-python-track2
-  - repo: azure-resource-manager-schemas
 ```
 
 ``` yaml $(go)
@@ -40,6 +44,10 @@ go:
 output-folder: $(go-sdk-folder)/services/$(namespace)/mgmt/2020-01-01/$(namespace)
 ```
 
+``` yaml $(tag) == 'package-2020-02' && $(go)
+output-folder: $(go-sdk-folder)/services/$(namespace)/mgmt/2020-02-01/$(namespace)
+```
+
 ``` yaml $(typescript)
 typescript:
   azure-arm: true
@@ -50,7 +58,6 @@ typescript:
   clear-output-folder: true
   generate-metadata: true
 ```
-
 
 ``` yaml $(cli)
 cli:
